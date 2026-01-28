@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "controlrbabl",
   "version": "0.1a",
-  "name": "ControlBabl",
+  "name": "ControlrBabl",
   "description": "Xbox 360/PS3-style controller support for Minecraft Beta 1.7.3",
   "authors": [
     "nt919"

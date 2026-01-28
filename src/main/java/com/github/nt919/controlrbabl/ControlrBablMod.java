@@ -1,6 +1,7 @@
 package com.github.nt919.controlrbabl;
 
 import net.mine_diver.unsafeevents.listener.EventListener;
+import net.modificationstation.stationapi.api.event.mod.InitEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
 import net.modificationstation.stationapi.api.util.Null;
@@ -17,8 +18,8 @@ public class ControlrBablMod {
     public static final ControlrBablMod INSTANCE = Null.get();
 
     @EventListener
-    public void init() {
-        LOGGER.info("ControlBabl initialized!");
+    public void init(InitEvent event) {
+        LOGGER.info("ControlrBabl initialized!");
         LOGGER.info("Controller support coming soon...");
     }
 }
