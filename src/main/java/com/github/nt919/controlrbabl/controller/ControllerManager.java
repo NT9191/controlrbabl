@@ -35,16 +35,31 @@ public class ControllerManager {
      */
     public boolean initialize() {
         if (initialized) {
+            logger.info("[ControlrBabl] Controller system already initialized");
             return true;
         }
 
         try {
+            // Load jinput native library from bundled resources
+            logger.info("[ControlrBabl] Loading jinput native library...");
+            boolean nativeLoaded = com.github.nt919.controlrbabl.util.NativeLoader.loadJInputNative(logger);
+
+            if (!nativeLoaded) {
+                logger.warn("[ControlrBabl] Could not load bundled native, trying system library...");
+            }
+
+            logger.info("[ControlrBabl] Attempting to create LWJGL Controllers...");
             Controllers.create();
-            logger.info("[ControlrBabl] Controller system initialized");
+            logger.info("[ControlrBabl] Controllers.create() succeeded");
 
             // Detect available controllers
             int controllerCount = Controllers.getControllerCount();
-            logger.info("[ControlrBabl] Found " + controllerCount + " controller(s)");
+            logger.info("[ControlrBabl] Controllers.getControllerCount() returned: " + controllerCount);
+
+            if (controllerCount == 0) {
+                logger.warn("[ControlrBabl] No controllers found. Is your controller connected and recognized by your OS?");
+                logger.info("[ControlrBabl] Note: PS5/Xbox controllers should be detected by Linux");
+            }
 
             // Log each controller's details
             for (int i = 0; i < controllerCount; i++) {
@@ -65,7 +80,11 @@ public class ControllerManager {
             return true;
 
         } catch (LWJGLException e) {
-            logger.error("[ControlrBabl] Failed to initialize controllers: " + e.getMessage());
+            logger.error("[ControlrBabl] LWJGL Exception while initializing controllers: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            logger.error("[ControlrBabl] Unexpected exception while initializing controllers: " + e.getMessage());
             e.printStackTrace();
             return false;
         }

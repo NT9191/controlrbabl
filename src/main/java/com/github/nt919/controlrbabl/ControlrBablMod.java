@@ -21,24 +21,11 @@ public class ControlrBablMod {
     // Controller system
     private static ControllerManager controllerManager;
     private static boolean enabled = false;
+    private static boolean initialized = false;
 
     @EventListener
     public void init(InitEvent event) {
-        LOGGER.info("[ControlrBabl] Initializing...");
-
-        // Initialize controller system
-        controllerManager = ControllerManager.getInstance(LOGGER);
-        boolean initialized = controllerManager.initialize();
-
-        if (initialized && controllerManager.getControllerCount() > 0) {
-            enabled = true;
-            LOGGER.info("[ControlrBabl] Enabled - " + controllerManager.getControllerCount() + " controller(s) detected");
-            if (controllerManager.getActiveController() != null) {
-                LOGGER.info("[ControlrBabl] Active controller: " + controllerManager.getActiveController().getName());
-            }
-        } else {
-            LOGGER.info("[ControlrBabl] No controllers detected - mod will remain dormant");
-        }
+        LOGGER.info("[ControlrBabl] Mod loaded - controller initialization will happen after game starts");
     }
 
     /**
@@ -46,6 +33,25 @@ public class ControlrBablMod {
      * This is where we poll the controller state
      */
     public static void tick() {
+        // Initialize on first tick (when OpenGL context is ready)
+        if (!initialized) {
+            initialized = true;
+            LOGGER.info("[ControlrBabl] Initializing controller system...");
+
+            controllerManager = ControllerManager.getInstance(LOGGER);
+            boolean initSuccess = controllerManager.initialize();
+
+            if (initSuccess && controllerManager.getControllerCount() > 0) {
+                enabled = true;
+                LOGGER.info("[ControlrBabl] Enabled - " + controllerManager.getControllerCount() + " controller(s) detected");
+                if (controllerManager.getActiveController() != null) {
+                    LOGGER.info("[ControlrBabl] Active controller: " + controllerManager.getActiveController().getName());
+                }
+            } else {
+                LOGGER.info("[ControlrBabl] No controllers detected - mod will remain dormant");
+            }
+        }
+
         if (!enabled || controllerManager == null) {
             return;
         }
@@ -54,7 +60,6 @@ public class ControlrBablMod {
         controllerManager.poll();
 
         // TODO: Process controller input and apply to game
-        // For now, we're just polling to keep the state updated
     }
 
     /**

@@ -48,6 +48,7 @@ repositories {
 		name = 'Jitpack'
 		url = 'https://jitpack.io'
 	}
+	mavenCentral()
 	// Used for another StationAPI dependency
 	exclusiveContent {
 		forRepository {
@@ -99,6 +100,9 @@ dependencies {
 	modImplementation("net.danygames2014:spawneggs:${project.spawneggs_version}") {
 		transitive false
 	}
+
+	// JInput for controller support (LWJGL 2.9 compatibility)
+	implementation 'net.java.jinput:jinput:2.0.10'
 
 
 
