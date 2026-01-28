@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "controlrbabl",
+  "version": "0.1a",
+
+  "name": "ControlrBabl",
+  "description": "A (notso) simple mod that implements PS3/xBox360 controller style support to b1.7.3 using Babric.",
+  "authors": [
+    "NT919, Telvarost(Codebase)"
+  ],
+  "contact": {
+
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/controlrbabl/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "stationapi:event_bus": [
+      "com.github.nt919.controlrbabl.events.init.RecipeListener",
+      "com.github.nt919.controlrbabl.events.init.RegistryListener"
+    ],
+    "stationapi:event_bus_client": [
+    ],
+    "stationapi:event_bus_server": [
+    ],
+    "gcapi3": [
+      "com.github.nt919.controlrbabl.Config"
+    ],
+    "gcapi3:presave": [
+      "com.github.nt919.controlrbabl.events.ConfigListener"
+    ]
+  },
+  "mixins": [
+    "controlrbabl.mixin.json"
+  ],
+
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3",
+    "gcapi3": ">=3.0.2",
+    "stationapi": "*"
+  },
+
+  "recommends": {
+    "modmenu": "*"
+  },
+
+  "breaks": {
+
+  }
+}
