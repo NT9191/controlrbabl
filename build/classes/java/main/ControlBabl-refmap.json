@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "com/github/nt919/controlrbabl/mixin/MinecraftMixin": {
+      "tick()V": "Lnet/minecraft/client/Minecraft;method_2137()V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "com/github/nt919/controlrbabl/mixin/MinecraftMixin": {
+        "tick()V": "Lnet/minecraft/client/Minecraft;method_2137()V"
+      }
+    }
+  }
+}
